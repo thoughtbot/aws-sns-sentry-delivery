@@ -1,0 +1,57 @@
+name: Terraform
+on:
+- push
+
+jobs:
+  checkfmt:
+    name: Format
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+
+    - name: Check format
+      run: make checkfmt
+
+  validate:
+    name: Validate
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+
+    - name: Validate
+      run: make validate
+
+  docs:
+    name: Docs
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+  
+  lint:
+    name: Lint
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+
+    - name: Setup TFLint
+      uses: terraform-linters/setup-tflint@v3
+      with:
+        tflint_version: v0.44.1
+
+    - name: Lint
+      run: make lint
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
