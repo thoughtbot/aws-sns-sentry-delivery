@@ -1,13 +1,3 @@
-variable "endpoint" {
-  description = "Endpoint for AlertManager message"
-  type        = string
-
-  validation {
-    condition     = contains(["Opsgenie", "Sentry"], var.endpoint)
-    error_message = "Valid values for var: endpoint are (Opsgenie, Sentry)."
-  }
-}
-
 variable "name" {
   description = "Unique name for alertmanager delivery"
   type        = string
