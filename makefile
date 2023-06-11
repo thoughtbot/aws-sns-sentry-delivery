@@ -1,6 +1,6 @@
 MODULEFILES := $(wildcard *.tf)
 TFLINTRC    ?= ./.tflint.hcl
-TFDOCSRC    ?= ./terraform-docs.yml
+TFDOCSRC    ?= ./.terraform-docs.yml
 
 .PHONY: default
 default: checkfmt validate docs lint

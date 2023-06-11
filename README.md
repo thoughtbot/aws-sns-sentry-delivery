@@ -2,6 +2,23 @@
 
 A module to deliver messages from SNS to Sentry.
 
+Example:
+
+```
+module "sns_sentry_delivery" {
+  source = "github.com:thoughtbot/aws-sns-sentry-delivery"
+  
+  name = "sample-sentry-messages"
+
+  # Name of the AWS Secretmanager resource contaiing the sentry DSN credentials
+  sentry_secret_name = sample-sentry-secret
+
+
+  # Enter the source SNS topic
+  source_sns_topic_arn = "arn:aws:sns:us-east-1:123456789:source-sns-topic"
+}
+```
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
@@ -41,11 +58,10 @@ A module to deliver messages from SNS to Sentry.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_endpoint"></a> [endpoint](#input\_endpoint) | Endpoint for AlertManager message | `string` | n/a | yes |
-| <a name="input_name"></a> [name](#input\_name) | Unique name for alertmanager delivery | `string` | n/a | yes |
-| <a name="input_sentry_environment"></a> [sentry\_environment](#input\_sentry\_environment) | Sentry environment to push warning logs | `string` | `"production"` | no |
-| <a name="input_sentry_secret_name"></a> [sentry\_secret\_name](#input\_sentry\_secret\_name) | Name of the secrets manager secret containing the sentry credentials | `string` | `null` | no |
-| <a name="input_sentry_subject_prefix"></a> [sentry\_subject\_prefix](#input\_sentry\_subject\_prefix) | Set a prefix to add to the subject before being published to Sentry | `string` | `""` | no |
+| <a name="input_name"></a> [name](#input\_name) | Unique name for the Sentry delivery resource. | `string` | n/a | yes |
+| <a name="input_sentry_environment"></a> [sentry\_environment](#input\_sentry\_environment) | Sentry environment to push warning logs. | `string` | `"production"` | no |
+| <a name="input_sentry_secret_name"></a> [sentry\_secret\_name](#input\_sentry\_secret\_name) | Name of the secrets manager secret containing the sentry credentials. | `string` | n/a | yes |
+| <a name="input_sentry_subject_prefix"></a> [sentry\_subject\_prefix](#input\_sentry\_subject\_prefix) | Set a prefix to add to the subject before being published to Sentry. | `string` | `""` | no |
 | <a name="input_sns_message_as_subject"></a> [sns\_message\_as\_subject](#input\_sns\_message\_as\_subject) | Set the SNS message field as the subject for Sentry | `bool` | `false` | no |
-| <a name="input_source_sns_topic_arn"></a> [source\_sns\_topic\_arn](#input\_source\_sns\_topic\_arn) | Source SNS topic for AlertManager messages. | `string` | n/a | yes |
+| <a name="input_source_sns_topic_arn"></a> [source\_sns\_topic\_arn](#input\_source\_sns\_topic\_arn) | Source SNS topic for incoming messages. | `string` | n/a | yes |
 <!-- END_TF_DOCS -->
