@@ -1,5 +1,5 @@
 locals {
-  function_name = "${var.name}-alertmanager-delivery-${random_id.unique_id.dec}"
+  function_name = "${var.name}-delivery-${random_id.unique_id.dec}"
 }
 
 resource "aws_lambda_function" "alertmanger_sentry_notification" {
