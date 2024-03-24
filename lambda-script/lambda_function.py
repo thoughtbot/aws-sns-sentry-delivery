@@ -15,21 +15,21 @@ sentry_logging = LoggingIntegration(
 
 awsSecretsClient = boto3.client('secretsmanager')
 
-sentrySecretName = os.environ['sentrySecretName']
+sentrySecretName = os.environ.get('sentrySecretName',"")
 
-sentryEnvironment = os.environ['sentryEnvironment']
+sentryEnvironment = os.environ.get('sentryEnvironment',"")
 
-sentrySubjectPrefix = os.environ['sentrySubjectPrefix']
+sentrySubjectPrefix = os.environ.get('sentrySubjectPrefix',"")
 
-snsMessageAsSubject = os.environ['snsMessageAsSubject']
+snsMessageAsSubject = os.environ.get('snsMessageAsSubject',"")
 
 awsSecretResponse = awsSecretsClient.get_secret_value(
     SecretId=sentrySecretName,
 )
 
-awsSentrySecret = json.loads(awsSecretResponse['SecretString'])
+awsSentrySecret = json.loads(awsSecretResponse.get('SecretString', '{}'))
 
-sentryDsn = awsSentrySecret['SENTRY_DSN']
+sentryDsn = awsSentrySecret.get('SENTRY_DSN',"")
 
 sentry_sdk.init(
     dsn=sentryDsn,
@@ -72,13 +72,13 @@ def lambda_handler(event, context):
 
         messageBodyExtra.update(dict(subject=snsSubject))
 
-        messageBody = messageBody.get("message")
+        messageBody = messageBody.get("message", "")
 
-        if messageBody is None:
+        if messageBody == "":
             messageBody = snsSubject
 
         if snsMessageAsSubject:
-            snsSubject = messageBody["message"]
+            snsSubject = messageBody.get("message", "")
 
         if sentrySubjectPrefix:
             snsSubject = sentrySubjectPrefix + " " + snsSubject
