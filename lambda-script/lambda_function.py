@@ -72,7 +72,7 @@ def lambda_handler(event, context):
 
         messageBodyExtra.update(dict(subject=snsSubject))
 
-        messageBody = messageBody.get("message", "")
+        messageBody = messageBodyExtra.get("message", "")
 
         if messageBody == "":
             messageBody = snsSubject
