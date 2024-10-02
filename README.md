@@ -1,4 +1,4 @@
-# AlertManager Deliery Module
+# AlertManager Delivery Module
 
 A module to deliver messages from SNS to Sentry.
 
